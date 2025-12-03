@@ -1,0 +1,38 @@
+# Unity Generated Files
+# ---------------------
+Library/
+Temp/
+Obj/
+Build/
+Assets/AssetStoreTools/
+Assets/StreamingAssets/
+UnityGenerated.cs
+
+# Visual Studio / Rider / VS Code files
+# ------------------------------------
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.meta
+.DS_Store
+.vscode/
+
+# Unity Editor-specific files
+# ---------------------------
+[Ll]ocal/[Ll]ocal[Ss]ettings/
+
+# Builds
+# ------
+*.apk
+*.unitypackage
+
+# Crash Reports
+# -------------
+CrashReports/
