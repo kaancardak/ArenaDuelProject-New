@@ -9,6 +9,10 @@ public class KnightController : MonoBehaviour
     public float rollSpeed = 10f;
     public float rollDuration = 0.5f;
 
+    [Header("Ses Efektleri")]
+    public AudioClip attackSound;
+    public AudioClip shieldSound;
+
     [Header("Zemin Kontrolü")]
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
@@ -16,6 +20,7 @@ public class KnightController : MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator anim;
+    private AudioSource audioSource;
     private bool isGrounded;
     private bool isRolling = false;
     private bool isBlocking = false;
@@ -26,12 +31,12 @@ public class KnightController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
         if (isRolling) return;
-
         HandleInput();
         UpdateAnimations();
     }
@@ -42,7 +47,6 @@ public class KnightController : MonoBehaviour
         {
             Move();
         }
-        
         CheckGround();
     }
 
@@ -56,6 +60,12 @@ public class KnightController : MonoBehaviour
         if (Input.GetButtonDown("Fire1") && !isAttacking && !isBlocking)
         {
             StartCoroutine(PerformAttack());
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if(shieldSound != null && audioSource != null) 
+                audioSource.PlayOneShot(shieldSound);
         }
 
         if (Input.GetMouseButton(1))
@@ -77,17 +87,10 @@ public class KnightController : MonoBehaviour
     void Move()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
-        
         rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
 
-        if (moveInput > 0 && facingDirection == -1)
-        {
-            Flip();
-        }
-        else if (moveInput < 0 && facingDirection == 1)
-        {
-            Flip();
-        }
+        if (moveInput > 0 && facingDirection == -1) Flip();
+        else if (moveInput < 0 && facingDirection == 1) Flip();
     }
 
     void Flip()
@@ -111,15 +114,12 @@ public class KnightController : MonoBehaviour
         anim.SetBool("IsBlocking", isBlocking);
     }
 
-
     IEnumerator PerformAttack()
     {
         isAttacking = true;
         anim.SetTrigger("Attack");
-        
         rb.linearVelocity = Vector2.zero;
         yield return new WaitForSeconds(0.4f); 
-        
         isAttacking = false;
     }
 
@@ -127,20 +127,14 @@ public class KnightController : MonoBehaviour
     {
         isRolling = true;
         anim.SetTrigger("Roll");
-
         rb.linearVelocity = new Vector2(facingDirection * rollSpeed, 0);
-
         yield return new WaitForSeconds(rollDuration);
-
         isRolling = false;
     }
-    
-    void OnDrawGizmosSelected()
+
+    public void PlayAttackSound()
     {
-        if (groundCheck != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-        }
+        if(attackSound != null && audioSource != null) 
+            audioSource.PlayOneShot(attackSound);
     }
 }

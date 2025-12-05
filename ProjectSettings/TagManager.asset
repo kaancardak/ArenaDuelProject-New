@@ -13,9 +13,9 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - Weapon
   - 
   - 
   - 
@@ -41,6 +41,15 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Props
+    uniqueID: 898772533
+    locked: 0
+  - name: Ground
+    uniqueID: 3669784283
+    locked: 0
+  - name: Game
+    uniqueID: 1653455617
     locked: 0
   m_RenderingLayers:
   - Default
