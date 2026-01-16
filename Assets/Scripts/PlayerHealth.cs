@@ -46,6 +46,7 @@ public class PlayerHealth : MonoBehaviour
         {
             StartCoroutine(DeathSequence());
         }
+        Debug.Log("Player Health: " + currentHealth);
     }
 
     private void UpdateUI()
